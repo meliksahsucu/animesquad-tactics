@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Anime Squad Tactics Studio | Tactical RPG & AI Pipeline</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,6 +28,7 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
+      width: 100%;
     }
 
     /* Ambient Pulsing Glow */
@@ -109,6 +110,27 @@
       color: var(--accent);
       font-weight: 600;
       box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+      white-space: nowrap;
+    }
+
+    /* Hamburger Menu Button (Mobile) */
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 110;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
     }
 
     nav {
@@ -160,6 +182,7 @@
       font-weight: 700;
       text-decoration: none;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
     }
 
     .nav-btn::before {
@@ -230,7 +253,7 @@
 
     .hero h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.5rem, 5.5vw, 4.4rem);
+      font-size: clamp(2.3rem, 5.5vw, 4.4rem);
       font-weight: 800;
       letter-spacing: -1.8px;
       line-height: 1.1;
@@ -436,7 +459,7 @@
     /* Action Cards with Smooth Elevation & Glow */
     .combat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 24px;
     }
 
@@ -490,6 +513,7 @@
       transition: all 0.3s ease;
       pointer-events: none;
       backdrop-filter: blur(6px);
+      white-space: nowrap;
     }
 
     .combat-card:hover .img-overlay-hint {
@@ -512,7 +536,7 @@
     /* Systems Grid */
     .systems-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 26px;
     }
 
@@ -570,7 +594,7 @@
       border-radius: 20px;
       padding: 48px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 40px;
       margin-top: 20px;
       transition: border-color 0.3s ease;
@@ -593,10 +617,12 @@
     .spec-table li {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 12px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       font-size: 0.9rem;
       transition: background 0.2s ease, padding 0.2s ease;
+      word-break: break-word;
     }
 
     .spec-table li:hover {
@@ -604,8 +630,8 @@
       padding: 12px 8px;
     }
 
-    .spec-table span:first-child { color: var(--muted); }
-    .spec-table span:last-child { font-weight: 600; color: #ffffff; }
+    .spec-table span:first-child { color: var(--muted); margin-right: 12px; }
+    .spec-table span:last-child { font-weight: 600; color: #ffffff; text-align: right; }
 
     /* Contact CTA */
     .contact-cta {
@@ -638,6 +664,7 @@
       overflow: hidden;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       background: var(--accent);
       color: #060911;
@@ -648,6 +675,7 @@
       text-decoration: none;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: 0 0 24px rgba(56, 189, 248, 0.35);
+      max-width: 100%;
     }
 
     .contact-btn::before {
@@ -675,17 +703,18 @@
       transform: translateY(0) scale(1);
     }
 
-    /* Lightbox Modal with Scale-in Animation */
+    /* Lightbox Modal with Touch Friendly Scale */
     .lightbox-modal {
       display: none;
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.92);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
-      padding: 24px;
+      padding: 16px;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -696,13 +725,14 @@
     }
 
     .lightbox-modal img {
-      max-width: 92%;
-      max-height: 88vh;
+      max-width: 95%;
+      max-height: 85vh;
       border-radius: 12px;
       box-shadow: 0 0 60px rgba(0,0,0,0.9);
       border: 1px solid var(--border);
       transform: scale(0.92);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      object-fit: contain;
     }
 
     .lightbox-modal.show img {
@@ -711,18 +741,25 @@
 
     .lightbox-close {
       position: absolute;
-      top: 24px;
-      right: 32px;
+      top: 18px;
+      right: 22px;
       color: #fff;
-      font-size: 2.8rem;
+      font-size: 2.4rem;
       cursor: pointer;
       font-weight: 300;
       transition: transform 0.2s ease, color 0.2s ease;
+      background: rgba(255, 255, 255, 0.1);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
     }
 
     .lightbox-close:hover {
       color: var(--accent);
-      transform: scale(1.15) rotate(90deg);
+      background: rgba(255, 255, 255, 0.2);
     }
 
     /* Footer */
@@ -742,10 +779,166 @@
     footer a { color: var(--muted); text-decoration: none; transition: color 0.2s ease; }
     footer a:hover { color: var(--accent); }
 
+    /* =======================================
+       RESPONSIVE & MOBILE RULES (MAX-WIDTH: 768px)
+       ======================================= */
     @media (max-width: 768px) {
-      header { flex-direction: column; gap: 14px; }
-      nav { gap: 14px; flex-wrap: wrap; justify-content: center; }
-      .about-box { padding: 26px; }
+      header {
+        padding: 14px 6%;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        position: fixed;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background: rgba(5, 8, 17, 0.98);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        flex-direction: column;
+        padding: 24px 6%;
+        gap: 20px;
+        align-items: stretch;
+        text-align: center;
+        transform: translateY(-120%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      }
+
+      nav.active {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      nav a {
+        font-size: 1.05rem;
+        padding: 8px 0;
+      }
+
+      .nav-btn {
+        margin-top: 8px;
+        padding: 12px;
+      }
+
+      .hero {
+        padding: 50px 6% 30px;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+        letter-spacing: -1px;
+      }
+
+      .hero p {
+        font-size: 1rem;
+        margin-bottom: 28px;
+      }
+
+      .hero-viewport {
+        padding: 0 6%;
+        margin-bottom: 45px;
+      }
+
+      .hero-screen::after {
+        opacity: 1;
+        transform: translateY(0);
+        font-size: 0.72rem;
+        padding: 6px 12px;
+        bottom: 12px;
+        right: 12px;
+      }
+
+      .stats-ribbon {
+        padding: 28px 6%;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .stat-val {
+        font-size: 1.9rem;
+      }
+
+      .section-wrap {
+        padding: 60px 6% 20px;
+      }
+
+      .section-head {
+        margin-bottom: 35px;
+      }
+
+      .section-head h2 {
+        font-size: 1.75rem;
+      }
+
+      .ai-showcase-box {
+        padding: 24px 20px;
+      }
+
+      .ai-showcase-box h2 {
+        font-size: 1.5rem !important;
+      }
+
+      .combat-grid,
+      .systems-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .img-overlay-hint {
+        opacity: 0.9;
+        font-size: 0.75rem;
+        padding: 6px 12px;
+      }
+
+      .about-box {
+        padding: 26px 20px;
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .about-main h3 {
+        font-size: 1.4rem;
+      }
+
+      .spec-table li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 10px 0;
+      }
+
+      .spec-table span:last-child {
+        text-align: left;
+      }
+
+      .contact-cta {
+        padding: 40px 20px;
+      }
+
+      .contact-cta h2 {
+        font-size: 1.7rem;
+      }
+
+      .contact-btn {
+        width: 100%;
+        padding: 14px 20px;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 6%;
+      }
     }
   </style>
 </head>
@@ -756,14 +949,22 @@
   <header>
     <div class="brand-wrap">
       <a href="#" class="brand-title">Anime Squad Tactics</a>
-      <span class="badge-est">Est. August 2026</span>
+      <span class="badge-est">Est. Aug 2026</span>
     </div>
-    <nav>
-      <a href="#pipeline">AI Pipeline</a>
-      <a href="#combat">Combat Engine</a>
-      <a href="#systems">Subsystems</a>
-      <a href="#about">Studio</a>
-      <a href="#contact">Contact</a>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="navMenu">
+      <a href="#pipeline" onclick="closeNav()">AI Pipeline</a>
+      <a href="#combat" onclick="closeNav()">Combat Engine</a>
+      <a href="#systems" onclick="closeNav()">Subsystems</a>
+      <a href="#about" onclick="closeNav()">Studio</a>
+      <a href="#contact" onclick="closeNav()">Contact</a>
       <a href="mailto:contact@animesquad.xyz" class="nav-btn">Inquiries</a>
     </nav>
   </header>
@@ -840,7 +1041,7 @@
     <div class="combat-grid">
       <div class="combat-card" onclick="openLightbox('kuzan.png')">
         <div class="img-box">
-          <img src="kuzan.png" alt="Kuzan Combat Execution">
+          <img src="kuzan.png" alt="Kuzan Combat Execution" loading="lazy">
           <span class="img-overlay-hint">🔍 Expand FX</span>
         </div>
         <div class="combat-info">
@@ -852,7 +1053,7 @@
 
       <div class="combat-card" onclick="openLightbox('aizen.png')">
         <div class="img-box">
-          <img src="aizen.png" alt="Sosuke Aizen Tactical Encounter">
+          <img src="aizen.png" alt="Sosuke Aizen Tactical Encounter" loading="lazy">
           <span class="img-overlay-hint">🔍 Expand FX</span>
         </div>
         <div class="combat-info">
@@ -864,7 +1065,7 @@
 
       <div class="combat-card" onclick="openLightbox('madara.png')">
         <div class="img-box">
-          <img src="madara.png" alt="Madara Uchiha Meteor Strike">
+          <img src="madara.png" alt="Madara Uchiha Meteor Strike" loading="lazy">
           <span class="img-overlay-hint">🔍 Expand FX</span>
         </div>
         <div class="combat-info">
@@ -886,7 +1087,7 @@
     <div class="systems-grid">
       <div class="sys-item" onclick="openLightbox('tactics-grid.png')">
         <div class="img-box">
-          <img src="tactics-grid.png" alt="Tactical Pad Matrix">
+          <img src="tactics-grid.png" alt="Tactical Pad Matrix" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -898,7 +1099,7 @@
 
       <div class="sys-item" onclick="openLightbox('heroes-roster.png')">
         <div class="img-box">
-          <img src="heroes-roster.png" alt="Hero Management Roster">
+          <img src="heroes-roster.png" alt="Hero Management Roster" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -910,7 +1111,7 @@
 
       <div class="sys-item" onclick="openLightbox('pvp-arena.png')">
         <div class="img-box">
-          <img src="pvp-arena.png" alt="Asynchronous Ranked Matchmaking">
+          <img src="pvp-arena.png" alt="Asynchronous Ranked Matchmaking" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -922,7 +1123,7 @@
 
       <div class="sys-item" onclick="openLightbox('campaign-map.png')">
         <div class="img-box">
-          <img src="campaign-map.png" alt="Campaign Map Progression">
+          <img src="campaign-map.png" alt="Campaign Map Progression" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -934,7 +1135,7 @@
 
       <div class="sys-item" onclick="openLightbox('tactical-inventory.png')">
         <div class="img-box">
-          <img src="tactical-inventory.png" alt="Tactical Inventory and Synthesis">
+          <img src="tactical-inventory.png" alt="Tactical Inventory and Synthesis" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -946,7 +1147,7 @@
 
       <div class="sys-item" onclick="openLightbox('summon-banner.png')">
         <div class="img-box">
-          <img src="summon-banner.png" alt="Hero Summon Banner">
+          <img src="summon-banner.png" alt="Hero Summon Banner" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -958,7 +1159,7 @@
 
       <div class="sys-item" onclick="openLightbox('battle-pass.png')">
         <div class="img-box">
-          <img src="battle-pass.png" alt="Quests and Battle Pass Progression">
+          <img src="battle-pass.png" alt="Quests and Battle Pass Progression" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -970,7 +1171,7 @@
 
       <div class="sys-item" onclick="openLightbox('character-index.png')">
         <div class="img-box">
-          <img src="character-index.png" alt="Character Index Catalog">
+          <img src="character-index.png" alt="Character Index Catalog" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -982,7 +1183,7 @@
 
       <div class="sys-item" onclick="openLightbox('leaderboard.png')">
         <div class="img-box">
-          <img src="leaderboard.png" alt="Server Power Leaderboard">
+          <img src="leaderboard.png" alt="Server Power Leaderboard" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -994,7 +1195,7 @@
 
       <div class="sys-item" onclick="openLightbox('shop-menu.png')">
         <div class="img-box">
-          <img src="shop-menu.png" alt="Studio In-Game Shop">
+          <img src="shop-menu.png" alt="Studio In-Game Shop" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -1006,7 +1207,7 @@
 
       <div class="sys-item" onclick="openLightbox('profile.png')">
         <div class="img-box">
-          <img src="profile.png" alt="User Studio Profile">
+          <img src="profile.png" alt="User Studio Profile" loading="lazy">
           <span class="img-overlay-hint">🔍 View System</span>
         </div>
         <div class="sys-content">
@@ -1066,8 +1267,28 @@
     </div>
   </footer>
 
-  <!-- Interactive Scripts (Scroll Reveal & Lightbox) -->
+  <!-- Interactive Scripts (Mobile Nav, Scroll Reveal & Lightbox) -->
   <script>
+    // Mobile Nav Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navMenu.classList.toggle('active');
+    });
+
+    function closeNav() {
+      navMenu.classList.remove('active');
+    }
+
+    // Close mobile nav when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        closeNav();
+      }
+    });
+
     // Scroll Reveal Intersection Observer
     document.addEventListener("DOMContentLoaded", function () {
       const reveals = document.querySelectorAll(".reveal");
@@ -1077,7 +1298,7 @@
             entry.target.classList.add("active");
           }
         });
-      }, { threshold: 0.1 });
+      }, { threshold: 0.08 });
 
       reveals.forEach((el) => observer.observe(el));
     });
