@@ -3,42 +3,578 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Squad Tactics | Independent Studio</title>
+  <title>Anime Squad Tactics Studio | Official Site</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0b0f19; color: #f1f5f9; text-align: center; padding: 60px 20px; }
-    .container { max-width: 800px; margin: 0 auto; }
-    .badge { display: inline-block; padding: 6px 14px; background: #1e293b; border: 1px solid #334155; border-radius: 9999px; font-size: 0.85rem; color: #38bdf8; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
-    h1 { font-size: 3rem; margin-bottom: 12px; font-weight: 800; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    p.subtitle { font-size: 1.2rem; color: #94a3b8; line-height: 1.6; margin-bottom: 40px; }
-    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; text-align: left; }
-    .card { background: #131b2e; padding: 24px; border-radius: 12px; border: 1px solid #1e293b; }
-    .card h3 { margin-top: 0; color: #e2e8f0; font-size: 1.15rem; }
-    .card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0; }
-    .footer { margin-top: 60px; font-size: 0.85rem; color: #64748b; border-top: 1px solid #1e293b; padding-top: 24px; }
+    :root {
+      --bg: #070a13;
+      --card-bg: rgba(15, 23, 42, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Glow Ambient */
+    .glow-top {
+      position: absolute;
+      top: -140px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(7, 10, 19, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Navbar */
+    header {
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 10, 19, 0.85);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .founded-pill {
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .nav-btn {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--accent);
+      color: #070a13;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 8% 50px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      color: var(--accent);
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: #38bdf8;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #38bdf8;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 740px;
+      margin: 0 auto 36px;
+    }
+
+    /* Hero Showcase Image */
+    .hero-image-wrap {
+      max-width: 1200px;
+      margin: 0 auto 80px;
+      padding: 0 8%;
+    }
+
+    .hero-frame {
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
+      background: #020617;
+    }
+
+    .hero-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Stats Banner */
+    .stats-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.4);
+      padding: 40px 8%;
+    }
+
+    .stats-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .stat-lbl {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* Section Headers */
+    .section-wrap {
+      padding: 90px 8% 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* Systems Grid */
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+    }
+
+    .system-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+
+    .system-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.3);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .system-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-content {
+      padding: 24px;
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .card-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .card-content p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Studio Overview Section */
+    .about-card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(7, 10, 19, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 20px;
+    }
+
+    .about-info h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .about-info p {
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+
+    .spec-list {
+      list-style: none;
+      margin-top: 18px;
+    }
+
+    .spec-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.9rem;
+    }
+
+    .spec-list span:first-child {
+      color: var(--muted);
+    }
+
+    .spec-list span:last-child {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* Contact Section */
+    .contact-box {
+      background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 20px;
+      padding: 60px 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .contact-box h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 1.05rem;
+    }
+
+    .contact-email-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #070a13;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.35);
+    }
+
+    .contact-email-btn:hover {
+      background: #7dd3fc;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 8%;
+      margin-top: 80px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      color: #64748b;
+      font-size: 0.88rem;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      header { flex-direction: column; gap: 16px; }
+      nav { gap: 16px; flex-wrap: wrap; justify-content: center; }
+      .about-card { padding: 28px; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="badge">In Active Development • Roblox</div>
-    <h1>Anime Squad Tactics</h1>
-    <p class="subtitle">An indie tactical squad RPG built on Roblox Studio, integrating dynamic NPC decision systems, custom Lua frameworks, and stylized grid-based tactical combat.</p>
-    <div class="features">
-      <div class="card">
-        <h3>Tactical Combat</h3>
-        <p>Turn-based mechanics, precise squad placement, and responsive Lua-powered action systems.</p>
-      </div>
-      <div class="card">
-        <h3>Adaptive AI Systems</h3>
-        <p>Complex enemy tactics and behavioral decision trees developed using modern LLM pipelines.</p>
-      </div>
-      <div class="card">
-        <h3>Branching Quests</h3>
-        <p>Interactive storyline, rich character progression, and immersive lore-driven tactical battles.</p>
-      </div>
+  <div class="glow-top"></div>
+
+  <!-- Header / Navbar -->
+  <header>
+    <div class="brand-group">
+      <a href="#" class="brand-title">Anime Squad Tactics</a>
+      <span class="founded-pill">Est. August 2026</span>
     </div>
-    <div class="footer">
-      © 2026 Anime Squad Tactics Studio. Contact: contact@animesquad.xyz
+    <nav>
+      <a href="#systems">Gameplay Systems</a>
+      <a href="#about">Studio Architecture</a>
+      <a href="#contact">Contact</a>
+      <a href="mailto:contact@animesquad.xyz" class="nav-btn">Get in Touch</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span> In Active Development • Roblox Studio
+    </div>
+    <h1>Independent Tactical Squad RPG Studio</h1>
+    <p>Engineered with custom Luau modular netcode, grid-based tactical unit placement, and automated state-machine pipelines for dynamic enemy tactics.</p>
+  </section>
+
+  <!-- Main Hero Image Showcase -->
+  <div class="hero-image-wrap">
+    <div class="hero-frame">
+      <img src="battle-action.jpg" alt="Anime Squad Tactics Real-time Battle FX">
     </div>
   </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-val">800+</div>
+        <div class="stat-lbl">Campaign Stages</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">6v6</div>
+        <div class="stat-lbl">Tactical Grid Matrix</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">Luau</div>
+        <div class="stat-lbl">Modular Netcode</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">Aug 2026</div>
+        <div class="stat-lbl">Studio Founded</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Systems / Gallery Section -->
+  <section id="systems" class="section-wrap">
+    <div class="section-header">
+      <h2>Engine & Production Showcase</h2>
+      <p>Functional gameplay subsystems running in production build environments</p>
+    </div>
+
+    <div class="systems-grid">
+      <div class="system-card">
+        <img src="tactics-grid.jpg" alt="Pad Positioning Matrix">
+        <div class="card-content">
+          <div class="card-tag">Core Combat</div>
+          <h3>Grid Tactical Placement</h3>
+          <p>Real-time drag-and-drop unit placement on tactical formation pads with active stat synergies and position-based targeting.</p>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <img src="heroes-roster.jpg" alt="Hero Progression Roster">
+        <div class="card-content">
+          <div class="card-tag">RPG Mechanics</div>
+          <h3>Tiered Hero Attributes</h3>
+          <p>Multi-attribute stat trees (STR, DEX, AGI) combined with rarity tiers (Mythic, Secret, Legendary) powered by modular state trees.</p>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <img src="pvp-arena.jpg" alt="PvP Ranked Ladder">
+        <div class="card-content">
+          <div class="card-tag">Competitive</div>
+          <h3>Ranked Matchmaking & ELO</h3>
+          <p>Asynchronous PvP battle resolution engine featuring squad snapshots, defensive lineups, and season-based ladder rankings.</p>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <img src="campaign-map.jpg" alt="Campaign Act Map">
+        <div class="card-content">
+          <div class="card-tag">Progression</div>
+          <h3>Act-Based World Campaign</h3>
+          <p>800-stage non-linear progression graph with dynamic combat power scaling, encounter branch logic, and milestone reward tables.</p>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <img src="tactical-inventory.jpg" alt="Tactical Inventory and Synthesis">
+        <div class="card-content">
+          <div class="card-tag">Economy</div>
+          <h3>Inventory & Set Synthesis</h3>
+          <p>Tiered equipment matrices supporting gear set multipliers, resource fusion, and character ascension pipelines.</p>
+        </div>
+      </div>
+
+      <div class="system-card">
+        <img src="battle-action.jpg" alt="VFX Execution">
+        <div class="card-content">
+          <div class="card-tag">Client Rendering</div>
+          <h3>Particle & Action Resolution</h3>
+          <p>High-efficiency client VFX execution with server-authoritative damage validation, turn buffers, and sound design hooks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Architecture Section -->
+  <section id="about" class="section-wrap">
+    <div class="about-card">
+      <div class="about-info">
+        <h3>About Anime Squad Tactics Studio</h3>
+        <p>Founded in <strong>August 2026</strong>, our studio is dedicated to delivering deep, tactical strategy experiences with anime aesthetic sensibilities directly on the Roblox engine.</p>
+        <p>We blend modern game design patterns with custom Luau modular architecture and AI pipelines to create complex, responsive enemy behaviors and dynamic procedural encounters.</p>
+      </div>
+      <div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 12px;">Studio Specifications</h3>
+        <ul class="spec-list">
+          <li><span>Studio Name</span> <span>Anime Squad Tactics Studio</span></li>
+          <li><span>Domain</span> <span>animesquad.xyz</span></li>
+          <li><span>Founded</span> <span>August 2026</span></li>
+          <li><span>Platform</span> <span>Roblox (Luau Architecture)</span></li>
+          <li><span>Contact Email</span> <span>contact@animesquad.xyz</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Box -->
+  <section id="contact" class="section-wrap">
+    <div class="contact-box">
+      <h2>Connect with the Studio</h2>
+      <p>For partnership inquiries, program collaborations, or technical developer questions, reach out to our team directly.</p>
+      <a href="mailto:contact@animesquad.xyz" class="contact-email-btn">
+        ✉ contact@animesquad.xyz
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      © 2026 Anime Squad Tactics Studio. All rights reserved.
+    </div>
+    <div>
+      Official Inquiries: <a href="mailto:contact@animesquad.xyz">contact@animesquad.xyz</a>
+    </div>
+  </footer>
 </body>
 </html>
