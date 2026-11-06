@@ -677,11 +677,18 @@ body {
 }
 
 /* ==========================================================================
-   Geçmiş / Log Listesi
+   Geçmiş / Log Listesi (Son 20 Kayıt)
    ========================================================================== */
 .history-section {
   width: 100%;
   margin-top: 36px;
+}
+
+.history-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
 }
 
 .history-title {
@@ -690,16 +697,51 @@ body {
   text-transform: uppercase;
   color: var(--text-muted);
   letter-spacing: 0.1em;
-  margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.clear-history-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.clear-history-btn:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .history-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 440px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* Custom Scrollbar for History */
+.history-list::-webkit-scrollbar {
+  width: 6px;
+}
+.history-list::-webkit-scrollbar-track {
+  background: var(--surface-sunken);
+  border-radius: 4px;
+}
+.history-list::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+.history-list::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
 
 .history-item {
@@ -714,64 +756,200 @@ body {
   color: var(--text-dim);
   transition: all 0.25s var(--spring-bounce);
   cursor: pointer;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .history-item:hover {
-  transform: translateX(6px) scale(1.02);
+  transform: translateX(4px) scale(1.01);
   color: #fff;
   box-shadow: var(--neu-raised);
 }
 
-/* ==========================================================================
-   Toast Bildirimi (Puffed Neumorphic Float)
-   ========================================================================== */
-.toast-notice {
-  position: fixed;
-  bottom: 28px;
-  background: var(--surface-neu);
-  color: #ffffff;
-  padding: 14px 24px;
-  border-radius: 16px;
-  box-shadow: 14px 14px 30px #08090c, -10px -10px 24px rgba(255, 255, 255, 0.06);
+.history-item-content {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  z-index: 1000;
-  transform: translateY(100px) scale(0.9);
-  opacity: 0;
-  transition: all 0.35s var(--spring-bounce);
-  pointer-events: none;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
-.toast-notice.show {
-  transform: translateY(0) scale(1);
-  opacity: 1;
+.history-item-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
-/* Shutter Flash */
-.shutter-flash {
-  position: fixed;
-  inset: 0;
-  background: #ffffff;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transition: opacity 0.08s ease;
-}
-
-.shutter-flash.flash {
-  opacity: 0.25;
-}
-
-/* Responsive */
+/* ==========================================================================
+   Responsive & Mobil Uyumluluk (Tam Ekran, Telefon & Tablet)
+   ========================================================================== */
 @media (max-width: 768px) {
-  .lever-area { display: none; }
-  .reels-container { gap: 10px; }
-  .reel-box { height: 160px; }
-  .slot-item { height: 160px; }
-  .slot-item-icon { font-size: 2.4rem; }
-  .controls-bar { flex-wrap: wrap; }
-  .spin-btn, .capture-btn { width: 100%; }
+  body {
+    padding: 16px 10px 40px 10px;
+  }
+
+  .main-container {
+    max-width: 100%;
+  }
+
+  .system-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+  }
+
+  .system-title-group {
+    text-align: left;
+  }
+
+  .system-title {
+    font-size: 1.05rem;
+  }
+
+  .hardware-chassis {
+    padding: 14px 10px;
+    border-radius: 20px;
+  }
+
+  .telemetry-bar {
+    font-size: 0.65rem;
+    padding: 8px 10px;
+    margin-bottom: 14px;
+  }
+
+  .lever-area {
+    display: none; /* Mobilde kol yerine tam genişlik dokunmatik buton */
+  }
+
+  /* 3 Çark Mobilde Kusursuz Kompakt */
+  .reels-container {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .reel-header-row {
+    margin-bottom: 6px;
+    padding: 0 2px;
+  }
+
+  .reel-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+  }
+
+  .lock-btn {
+    padding: 3px 6px;
+    font-size: 0.58rem;
+    gap: 2px;
+  }
+
+  .lock-text {
+    display: none; /* Mobilde yer kazanmak için yalnızca kilit ikonu göster */
+  }
+
+  .reel-box {
+    height: 140px;
+    border-radius: 14px;
+  }
+
+  .slot-item {
+    height: 140px;
+    padding: 8px 4px;
+  }
+
+  .slot-item-icon {
+    font-size: 2.2rem;
+    margin-bottom: 4px;
+  }
+
+  .slot-item-title {
+    font-size: 0.78rem;
+    line-height: 1.2;
+    margin-bottom: 2px;
+    word-break: break-word;
+  }
+
+  .slot-item-tag {
+    display: none; /* Mobilde dar kutuda kalabalık yapmaması için alt açıklama gizlenir */
+  }
+
+  /* Oyun Fikri Kartı */
+  .capture-card-target {
+    padding: 16px 12px;
+    margin-top: 14px;
+    border-radius: 16px;
+  }
+
+  .idea-formula {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .formula-tag {
+    font-size: 0.78rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+
+  .formula-plus {
+    font-size: 0.9rem;
+  }
+
+  .idea-pitch-box {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .idea-title {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  .idea-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* Kontroller Barı */
+  .controls-bar {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .spin-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.05rem;
+    order: 1;
+  }
+
+  .secondary-controls {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+    order: 2;
+  }
+
+  .capture-btn {
+    flex: 1;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    justify-content: center;
+  }
+
+  .tool-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+
+  .history-item {
+    padding: 10px 12px;
+    font-size: 0.78rem;
+  }
 }

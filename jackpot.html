@@ -142,26 +142,29 @@
             <kbd style="font-family: var(--font-mono); font-size: 0.7rem; background: #e4e4e7; color: #52525b; padding: 2px 6px; border-radius: 4px;">SPACE</kbd>
           </button>
 
-          <!-- Ekran Resmi / Clipboard Tuşu -->
-          <button id="capture-btn" class="capture-btn" title="Jackpot sonucunu kırpıp panoya kopyala">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <span>COPY IMAGE</span>
-          </button>
+          <!-- İkincil Araçlar (Mobilde yan yana hizalanır) -->
+          <div class="secondary-controls">
+            <!-- Ekran Resmi / Clipboard Tuşu -->
+            <button id="capture-btn" class="capture-btn" title="Jackpot sonucunu kırpıp panoya kopyala">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span>COPY IMAGE</span>
+            </button>
 
-          <!-- Metin Olarak Kopyala Tuşu -->
-          <button id="copy-text-btn" class="tool-btn" title="Metin Olarak Kopyala">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-          </button>
+            <!-- Metin Olarak Kopyala Tuşu -->
+            <button id="copy-text-btn" class="tool-btn" title="Metin Olarak Kopyala">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            </button>
 
-          <!-- Turbo Hızlı Çevirme Toggle -->
-          <button id="turbo-btn" class="tool-btn" title="Hızlı Mod (Turbo)">
-            ⚡
-          </button>
+            <!-- Turbo Hızlı Çevirme Toggle -->
+            <button id="turbo-btn" class="tool-btn" title="Hızlı Mod (Turbo)">
+              ⚡
+            </button>
 
-          <!-- Ses Aç/Kapat Butonu -->
-          <button id="mute-btn" class="tool-btn" title="Sesi Aç/Kapat">
-            🔊
-          </button>
+            <!-- Ses Aç/Kapat Butonu -->
+            <button id="mute-btn" class="tool-btn" title="Sesi Aç/Kapat">
+              🔊
+            </button>
+          </div>
         </div>
 
       </div>
@@ -177,10 +180,15 @@
 
     </div>
 
-    <!-- Sistem Geçmişi / Log -->
+    <!-- Sistem Geçmişi / Log (Son 20 Kayıt) -->
     <section class="history-section">
-      <div class="history-title">
-        <span>LOG ARCHIVE // RECENT GENERATIONS</span>
+      <div class="history-header-row">
+        <div class="history-title">
+          <span>LOG ARCHIVE // RECENT 20 GENERATIONS</span>
+        </div>
+        <button id="clear-history-btn" class="clear-history-btn" title="Cihazdaki geçmişi temizle">
+          ✕ GEÇMİŞİ TEMİZLE
+        </button>
       </div>
       <div id="history-list" class="history-list"></div>
     </section>

@@ -4,7 +4,8 @@ let isSpinning = false;
 let turboMode = false;
 const lockedReels = [false, false, false];
 let currentCombination = null; // Başlangıçta null (çevrilmedi)
-const history = [];
+const STORAGE_KEY = "animesquad_jackpot_logs_v20";
+let history = [];
 
 // DOM Elemanları
 const reelStrips = [
@@ -30,6 +31,7 @@ const captureBtn = document.getElementById("capture-btn");
 const copyTextBtn = document.getElementById("copy-text-btn");
 const turboBtn = document.getElementById("turbo-btn");
 const muteBtn = document.getElementById("mute-btn");
+const clearHistoryBtn = document.getElementById("clear-history-btn");
 const toast = document.getElementById("toast-notice");
 const shutterFlash = document.getElementById("shutter-flash");
 const ideaCard = document.getElementById("capture-target");
@@ -45,8 +47,9 @@ const PLACEHOLDERS = [
   { icon: "❓", name: "Oyun Türü", desc: "Kolu çekmeyi bekliyor..." }
 ];
 
+// Mobilde 140px, Masaüstünde 195px
 function getSlotHeight() {
-  return window.innerWidth <= 768 ? 160 : 195;
+  return window.innerWidth <= 768 ? 140 : 195;
 }
 
 function generateSeed() {
@@ -176,6 +179,14 @@ function initEngine() {
       if (!isSpinning) window.soundFX.playTick();
     });
   });
+
+  // Cihazdaki kayıtlı logları yükle
+  loadHistoryFromStorage();
+
+  // Geçmişi Temizle Butonu
+  if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener("click", clearAllHistory);
+  }
 }
 
 // Fikir Kartını Güncelle (Sade, kısıtlamasız, temiz)
@@ -365,21 +376,101 @@ function triggerMinimalConfetti() {
   }
 }
 
-// Geçmişe Ekle
-function addToHistory(t1, t2, genre) {
-  history.unshift({ t1, t2, genre, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) });
-  if (history.length > 5) history.pop();
+// ==========================================================================
+// Cihaz Hafızasında (LocalStorage) Son 20 Log Yönetimi
+// ==========================================================================
+function loadHistoryFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      history = JSON.parse(raw);
+      if (!Array.isArray(history)) history = [];
+    }
+  } catch (e) {
+    history = [];
+  }
+  renderHistory();
+}
 
+function addToHistory(t1, t2, genre) {
+  const pitch = generatePitch(t1, t2, genre);
+  const logItem = {
+    t1: { icon: t1.icon, name: t1.name, desc: t1.desc },
+    t2: { icon: t2.icon, name: t2.name, desc: t2.desc },
+    genre: { icon: genre.icon, name: genre.name, desc: genre.desc },
+    title: pitch.title,
+    desc: pitch.description,
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+    date: new Date().toLocaleDateString()
+  };
+
+  history.unshift(logItem);
+  if (history.length > 20) {
+    history = history.slice(0, 20); // Kesinlikle son 20 log tutulur
+  }
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+  } catch (e) {
+    console.warn("LocalStorage yazma hatası:", e);
+  }
+
+  renderHistory();
+}
+
+function renderHistory() {
   historyList.innerHTML = "";
-  history.forEach(item => {
+
+  if (history.length === 0) {
+    historyList.innerHTML = `
+      <div style="text-align: center; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted);">
+        [ Henüz kaydedilmiş bir oyun fikri yok. Kolu çek ve üret! ]
+      </div>
+    `;
+    return;
+  }
+
+  history.forEach((item, index) => {
     const div = document.createElement("div");
     div.className = "history-item";
+    div.title = "Bu fikri tekrar görüntülemek için tıkla";
     div.innerHTML = `
-      <span><strong>${item.t1.icon} ${item.t1.name}</strong> &bull; <strong>${item.t2.icon} ${item.t2.name}</strong> &rarr; <span style="color:#f59e0b; font-weight:700;">${item.genre.icon} ${item.genre.name}</span></span>
-      <span style="font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--text-muted);">${item.time}</span>
+      <div class="history-item-content">
+        <span style="font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--text-muted); width: 22px;">#${String(index + 1).padStart(2, '0')}</span>
+        <span><strong>${item.t1.icon} ${item.t1.name}</strong> &bull; <strong>${item.t2.icon} ${item.t2.name}</strong> &rarr; <span style="color:#f59e0b; font-weight:700;">${item.genre.icon} ${item.genre.name}</span></span>
+      </div>
+      <span class="history-item-time">${item.time}</span>
     `;
+
+    // Tıklanınca o eski fikri ekrana yükle
+    div.addEventListener("click", () => {
+      if (isSpinning) return;
+      updateIdeaCard(item.t1, item.t2, item.genre);
+      // İlgili çarkları da güncelle
+      populateReelStrip(reelStrips[0], item.t1);
+      populateReelStrip(reelStrips[1], item.t2);
+      populateReelStrip(reelStrips[2], item.genre);
+      captureBtn.disabled = false;
+      copyTextBtn.disabled = false;
+      window.soundFX.playTick();
+      showToast(`✓ #${index + 1} nolu oyun fikri yüklendi!`);
+    });
+
     historyList.appendChild(div);
   });
+}
+
+function clearAllHistory() {
+  if (history.length === 0) {
+    showToast("⚠️ Temizlenecek geçmiş kaydı yok.");
+    return;
+  }
+  if (confirm("Cihazda kayıtlı son 20 oyun fikri logunu temizlemek istiyor musunuz?")) {
+    history = [];
+    localStorage.removeItem(STORAGE_KEY);
+    renderHistory();
+    showToast("✓ Cihazdaki tüm geçmiş kayıtlar silindi.");
+  }
 }
 
 // Toast
