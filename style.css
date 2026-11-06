@@ -1,0 +1,777 @@
+/* ==========================================================================
+   DARK NEUMORPHISM (Soft UI) & HIGH-INTERACTIVITY THEME
+   Deep embossed layers, extruded physical controls, tactile spring motions
+   ========================================================================== */
+
+:root {
+  /* Dark Neumorphic Core Palette */
+  --bg-neu: #121418;
+  --surface-neu: #16191f;
+  --surface-raised: #1c2027;
+  --surface-sunken: #0c0d11;
+
+  /* Neumorphic Shadows (Extruded & Inset) */
+  --neu-flat: 8px 8px 18px #0a0b0e, -8px -8px 18px rgba(255, 255, 255, 0.035);
+  --neu-raised: 12px 12px 26px #090a0d, -10px -10px 24px rgba(255, 255, 255, 0.045);
+  --neu-sunken: inset 6px 6px 14px #08090c, inset -5px -5px 12px rgba(255, 255, 255, 0.03);
+  --neu-sunken-deep: inset 10px 10px 22px #060709, inset -8px -8px 18px rgba(255, 255, 255, 0.025);
+  --neu-btn: 6px 6px 14px #090a0d, -6px -6px 14px rgba(255, 255, 255, 0.04);
+  --neu-btn-pressed: inset 4px 4px 10px #08090b, inset -4px -4px 10px rgba(255, 255, 255, 0.035);
+
+  /* Subtle accents */
+  --accent-amber: #f59e0b;
+  --accent-amber-glow: rgba(245, 158, 11, 0.25);
+  --accent-glow-cyan: rgba(56, 189, 248, 0.2);
+  --text-pure: #ffffff;
+  --text-dim: #94a3b8;
+  --text-muted: #64748b;
+
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --smooth-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-neu);
+  color: var(--text-pure);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 16px;
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+/* Arka plan hafif ambient aura */
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.04) 0%, transparent 60%),
+    radial-gradient(circle at 20% 70%, rgba(56, 189, 248, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.main-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Üst Başlık (Header)
+   ========================================================================== */
+.system-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding: 16px 24px;
+  background: var(--surface-neu);
+  border-radius: 18px;
+  box-shadow: var(--neu-flat);
+  transition: transform 0.3s var(--smooth-ease), box-shadow 0.3s ease;
+}
+
+.system-header:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--neu-raised);
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+  box-shadow: 0 0 12px var(--accent-amber);
+  animation: breatheDot 2.4s infinite ease-in-out;
+}
+
+@keyframes breatheDot {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 18px var(--accent-amber); }
+}
+
+.brand-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--text-pure);
+}
+
+.system-title-group {
+  text-align: right;
+}
+
+.system-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.system-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Makine Şasisi (Neumorphic Raised Chassis)
+   ========================================================================== */
+.machine-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px; /* 3D hover perspektifi */
+}
+
+.hardware-chassis {
+  background: var(--surface-neu);
+  border-radius: 30px;
+  padding: 28px;
+  width: 100%;
+  position: relative;
+  box-shadow: var(--neu-raised);
+  transition: transform 0.35s var(--smooth-ease), box-shadow 0.35s ease;
+  transform-style: preserve-3d;
+}
+
+.hardware-chassis:hover {
+  box-shadow: 16px 16px 36px #08090c, -14px -14px 34px rgba(255, 255, 255, 0.05);
+}
+
+/* Telemetri Çubuğu (Gömülü / Sunken Neumorphic) */
+.telemetry-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding: 10px 18px;
+  background: var(--surface-sunken);
+  border-radius: 14px;
+  box-shadow: var(--neu-sunken);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.status-indicator.spinning {
+  background: var(--accent-amber);
+  box-shadow: 0 0 10px var(--accent-amber);
+  animation: pulseBlink 0.6s infinite;
+}
+
+@keyframes pulseBlink {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.4; }
+}
+
+/* ==========================================================================
+   Çarklar (Reels) - Derin Sunken OLED Pencereler
+   ========================================================================== */
+.reels-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.reel-column {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s var(--smooth-ease);
+}
+
+.reel-column:hover {
+  transform: translateY(-3px);
+}
+
+.reel-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
+.reel-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+/* Kilit (Lock) Butonları - Neumorphic Tactile */
+.lock-btn {
+  background: var(--surface-neu);
+  border: none;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: var(--neu-btn);
+  transition: all 0.2s var(--spring-bounce);
+}
+
+.lock-btn:hover {
+  color: var(--text-pure);
+  transform: scale(1.08);
+  box-shadow: 8px 8px 16px #08090c, -6px -6px 14px rgba(255, 255, 255, 0.05);
+}
+
+.lock-btn:active, .lock-btn.locked {
+  transform: scale(0.96);
+  box-shadow: var(--neu-btn-pressed);
+  color: var(--accent-amber);
+}
+
+/* Gömülü OLED Çark Kutusu */
+.reel-box {
+  width: 100%;
+  height: 195px;
+  background: var(--surface-sunken);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--neu-sunken-deep);
+  transition: transform 0.3s var(--smooth-ease), box-shadow 0.3s ease;
+}
+
+.reel-column:hover .reel-box {
+  box-shadow: inset 12px 12px 26px #040507, inset -10px -10px 22px rgba(255, 255, 255, 0.035);
+}
+
+.reel-box.stopped {
+  animation: reelSlamBounce 0.45s var(--spring-bounce);
+}
+
+@keyframes reelSlamBounce {
+  0% { transform: scaleY(0.95); }
+  50% { transform: scaleY(1.03); }
+  100% { transform: scaleY(1); }
+}
+
+/* Reel Strip & Items */
+.reel-strip {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.reel-strip.spinning {
+  filter: blur(1.8px);
+}
+
+.slot-item {
+  height: 195px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.slot-item-icon {
+  font-size: 3.2rem;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+  transition: transform 0.3s var(--spring-bounce);
+}
+
+.reel-box:hover .slot-item-icon {
+  transform: scale(1.18) rotate(3deg);
+}
+
+.slot-item-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.slot-item-tag {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  max-width: 210px;
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   Etkileşimli 3D Kol (Machined Tactile Lever)
+   ========================================================================== */
+.lever-area {
+  position: absolute;
+  right: -58px;
+  top: 60px;
+  width: 54px;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: grab;
+  z-index: 25;
+  transition: transform 0.2s var(--spring-bounce);
+}
+
+.lever-area:hover {
+  transform: scale(1.08) translateX(3px);
+}
+
+.lever-area:active {
+  cursor: grabbing;
+}
+
+.lever-mount {
+  position: absolute;
+  top: 135px;
+  width: 30px;
+  height: 48px;
+  background: var(--surface-neu);
+  border-radius: 10px;
+  box-shadow: var(--neu-flat);
+}
+
+.lever-arm-wrapper {
+  position: absolute;
+  top: 20px;
+  height: 140px;
+  transform-origin: bottom center;
+  transition: transform 0.25s var(--spring-bounce);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lever-knob {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #3f4756, #1c2029 70%, #0d0f14);
+  box-shadow: 6px 6px 16px #08090c, -4px -4px 10px rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s var(--spring-bounce), box-shadow 0.2s ease;
+}
+
+.lever-area:hover .lever-knob {
+  transform: scale(1.14);
+  box-shadow: 8px 8px 20px #06070a, -5px -5px 14px rgba(255, 255, 255, 0.12);
+}
+
+.lever-stick {
+  width: 10px;
+  height: 110px;
+  background: linear-gradient(90deg, #2b313d 0%, #64748b 50%, #1e222a 100%);
+  border-radius: 5px;
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+.lever-area.pulling .lever-arm-wrapper {
+  transform: rotateX(68deg) scaleY(0.35) translateY(55px);
+}
+
+/* ==========================================================================
+   Tasarım Belgesi Kartı (Capture Card Target) - Neumorphic Plaque
+   ========================================================================== */
+.capture-card-target {
+  width: 100%;
+  margin-top: 20px;
+  background: var(--surface-neu);
+  border-radius: 22px;
+  padding: 24px 28px;
+  position: relative;
+  box-shadow: var(--neu-flat);
+  transition: transform 0.3s var(--smooth-ease), box-shadow 0.3s ease;
+}
+
+.capture-card-target:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--neu-raised);
+}
+
+.idea-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.idea-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-amber);
+  background: var(--surface-sunken);
+  box-shadow: var(--neu-sunken);
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.08em;
+}
+
+.card-meta-tags {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meta-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  background: var(--surface-sunken);
+  box-shadow: var(--neu-sunken);
+  padding: 4px 10px;
+  border-radius: 8px;
+  transition: transform 0.2s var(--spring-bounce);
+}
+
+.meta-tag:hover {
+  transform: scale(1.08);
+  color: #fff;
+}
+
+.meta-tag.highlight {
+  color: var(--accent-amber);
+}
+
+.watermark {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Formula Row */
+.idea-formula {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.formula-tag {
+  background: var(--surface-neu);
+  box-shadow: var(--neu-btn);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.25s var(--spring-bounce), box-shadow 0.25s ease;
+  cursor: default;
+}
+
+.formula-tag:hover {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 8px 8px 18px #08090c, -6px -6px 16px rgba(255, 255, 255, 0.06);
+  color: var(--accent-amber);
+}
+
+.formula-plus {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Pitch Box (Sunken Neumorphic Container) */
+.idea-pitch-box {
+  background: var(--surface-sunken);
+  box-shadow: var(--neu-sunken);
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin-bottom: 6px;
+  text-align: center;
+  transition: transform 0.3s var(--smooth-ease);
+}
+
+.idea-pitch-box:hover {
+  transform: scale(1.01);
+}
+
+.idea-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.idea-desc {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.idea-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  padding-top: 6px;
+}
+
+/* ==========================================================================
+   Kontroller Barı - Canlı, Büyüyen / Küçülen Butonlar
+   ========================================================================== */
+.controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 24px;
+  padding-top: 22px;
+}
+
+/* Ana Generate Butonu (Extruded Tactile Pill) */
+.spin-btn {
+  flex: 1;
+  background: linear-gradient(145deg, #1e222a, #15181f);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: var(--neu-raised);
+  transition: all 0.25s var(--spring-bounce);
+  position: relative;
+  overflow: hidden;
+}
+
+.spin-btn:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 14px 14px 28px #08090c, -10px -10px 24px rgba(255, 255, 255, 0.07);
+  color: var(--accent-amber);
+}
+
+.spin-btn:active:not(:disabled) {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: var(--neu-btn-pressed);
+}
+
+.spin-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Capture Butonu */
+.capture-btn {
+  background: linear-gradient(145deg, #1a1e26, #14161c);
+  color: var(--text-pure);
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--neu-raised);
+  transition: all 0.25s var(--spring-bounce);
+}
+
+.capture-btn:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 12px 12px 24px #08090c, -8px -8px 20px rgba(255, 255, 255, 0.06);
+  color: #38bdf8;
+}
+
+.capture-btn:active:not(:disabled) {
+  transform: translateY(2px) scale(0.97);
+  box-shadow: var(--neu-btn-pressed);
+}
+
+/* Tool Butonları (Kare Neumorphic Dokunmatik Tuşlar) */
+.tool-btn {
+  background: var(--surface-neu);
+  border: none;
+  color: var(--text-dim);
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.15rem;
+  box-shadow: var(--neu-btn);
+  transition: all 0.22s var(--spring-bounce);
+}
+
+.tool-btn:hover {
+  transform: translateY(-4px) scale(1.12);
+  color: #fff;
+  box-shadow: 10px 10px 20px #07080a, -6px -6px 16px rgba(255, 255, 255, 0.07);
+}
+
+.tool-btn:active, .tool-btn.active {
+  transform: scale(0.94);
+  box-shadow: var(--neu-btn-pressed);
+  color: var(--accent-amber);
+}
+
+/* ==========================================================================
+   Geçmiş / Log Listesi
+   ========================================================================== */
+.history-section {
+  width: 100%;
+  margin-top: 36px;
+}
+
+.history-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  background: var(--surface-neu);
+  box-shadow: var(--neu-flat);
+  padding: 12px 18px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  transition: all 0.25s var(--spring-bounce);
+  cursor: pointer;
+}
+
+.history-item:hover {
+  transform: translateX(6px) scale(1.02);
+  color: #fff;
+  box-shadow: var(--neu-raised);
+}
+
+/* ==========================================================================
+   Toast Bildirimi (Puffed Neumorphic Float)
+   ========================================================================== */
+.toast-notice {
+  position: fixed;
+  bottom: 28px;
+  background: var(--surface-neu);
+  color: #ffffff;
+  padding: 14px 24px;
+  border-radius: 16px;
+  box-shadow: 14px 14px 30px #08090c, -10px -10px 24px rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 1000;
+  transform: translateY(100px) scale(0.9);
+  opacity: 0;
+  transition: all 0.35s var(--spring-bounce);
+  pointer-events: none;
+}
+
+.toast-notice.show {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Shutter Flash */
+.shutter-flash {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.08s ease;
+}
+
+.shutter-flash.flash {
+  opacity: 0.25;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .lever-area { display: none; }
+  .reels-container { gap: 10px; }
+  .reel-box { height: 160px; }
+  .slot-item { height: 160px; }
+  .slot-item-icon { font-size: 2.4rem; }
+  .controls-bar { flex-wrap: wrap; }
+  .spin-btn, .capture-btn { width: 100%; }
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime Squad // Internal Game Idea Generator</title>
+  
+  <!-- Fontlar: JetBrains Mono & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Kütüphaneler: html2canvas & canvas-confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Hassas Neumorphic Ambient Işık -->
+  <div class="ambient-glow"></div>
+
+  <!-- Fotoğraf Deklanşör Flaş Efekti -->
+  <div id="shutter-flash" class="shutter-flash"></div>
+
+  <!-- Toast Bildirimi -->
+  <div id="toast-notice" class="toast-notice">
+    <span style="color: #22c55e;">●</span>
+    <span id="toast-text">Görsel panoya kopyalandı!</span>
+  </div>
+
+  <main class="main-container">
+    <!-- Profesyonel Sistem Başlığı -->
+    <header class="system-header">
+      <div class="brand-badge">
+        <div class="brand-dot"></div>
+        <span class="brand-text">ANIME SQUAD LABS // PROTO-01</span>
+      </div>
+      <div class="system-title-group">
+        <h1 class="system-title">Internal Game Concept Engine</h1>
+        <p class="system-subtitle">Restricted Studio Access &bull; 249,642 Possibilities</p>
+      </div>
+    </header>
+
+    <!-- Ana Makine Konsolu & Lever -->
+    <div class="machine-wrapper">
+      
+      <!-- Hardware Şasi -->
+      <div class="hardware-chassis">
+        <!-- Şasi Vida Aksanları -->
+        <div class="chassis-screws">
+          <div class="screw tl"></div>
+          <div class="screw tr"></div>
+          <div class="screw bl"></div>
+          <div class="screw br"></div>
+        </div>
+
+        <!-- Telemetri ve Durum Göstergesi -->
+        <div class="telemetry-bar">
+          <div class="telemetry-item">
+            <span id="status-dot" class="status-indicator"></span>
+            <span id="status-text">STATUS: READY</span>
+          </div>
+          <div class="telemetry-item">
+            <span>ENGINE: V2.4-STABLE</span>
+          </div>
+          <div class="telemetry-item">
+            <span id="session-seed">SEED: #A4F9</span>
+          </div>
+        </div>
+
+        <!-- EKRAN GÖRÜNTÜSÜ ALINACAK PROFESYONEL KART ALANI -->
+        <div id="jackpot-capture-wrapper" style="padding: 16px; border-radius: 14px; background: #070709;">
+          
+          <!-- 3 Çark (Reels Grid) -->
+          <div class="reels-container">
+            
+            <!-- 1. Çark: ANA TEMA -->
+            <div class="reel-column">
+              <div class="reel-header-row">
+                <span class="reel-label">01 // CORE THEME</span>
+                <button id="lock-btn-1" class="lock-btn" title="Bu çarkı kilitle">
+                  <span class="lock-icon">🔒</span> <span class="lock-text">LOCK</span>
+                </button>
+              </div>
+              <div id="reel-box-1" class="reel-box">
+                <div id="reel-strip-1" class="reel-strip"></div>
+              </div>
+            </div>
+
+            <!-- 2. Çark: YAN TEMA -->
+            <div class="reel-column">
+              <div class="reel-header-row">
+                <span class="reel-label">02 // SUB CONFLICT</span>
+                <button id="lock-btn-2" class="lock-btn" title="Bu çarkı kilitle">
+                  <span class="lock-icon">🔒</span> <span class="lock-text">LOCK</span>
+                </button>
+              </div>
+              <div id="reel-box-2" class="reel-box">
+                <div id="reel-strip-2" class="reel-strip"></div>
+              </div>
+            </div>
+
+            <!-- 3. Çark: OYUN TÜRÜ -->
+            <div class="reel-column">
+              <div class="reel-header-row">
+                <span class="reel-label">03 // GENRE ARCHETYPE</span>
+                <button id="lock-btn-3" class="lock-btn" title="Bu çarkı kilitle">
+                  <span class="lock-icon">🔒</span> <span class="lock-text">LOCK</span>
+                </button>
+              </div>
+              <div id="reel-box-3" class="reel-box">
+                <div id="reel-strip-3" class="reel-strip"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Oyun Fikri Kartı -->
+          <div id="capture-target" class="capture-card-target">
+            <div class="idea-formula">
+              <div id="tag-t1" class="formula-tag">❓ Tema 1</div>
+              <span class="formula-plus">&times;</span>
+              <div id="tag-t2" class="formula-tag">❓ Tema 2</div>
+              <span class="formula-plus">&rarr;</span>
+              <div id="tag-genre" class="formula-tag">❓ Oyun Türü</div>
+            </div>
+
+            <div class="idea-pitch-box">
+              <h3 id="idea-title" class="idea-title">Kolu Çek veya [SPACE] Tuşuna Bas</h3>
+              <p id="idea-desc" class="idea-desc">3 çark sırayla dönecek ve sana rastgele benzersiz bir oyun konsepti verecek!</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Kontroller Barı -->
+        <div class="controls-bar">
+          <button id="spin-btn" class="spin-btn" title="Kolu çek veya butona bas">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>GENERATE CONCEPT</span>
+            <kbd style="font-family: var(--font-mono); font-size: 0.7rem; background: #e4e4e7; color: #52525b; padding: 2px 6px; border-radius: 4px;">SPACE</kbd>
+          </button>
+
+          <!-- Ekran Resmi / Clipboard Tuşu -->
+          <button id="capture-btn" class="capture-btn" title="Jackpot sonucunu kırpıp panoya kopyala">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>COPY IMAGE</span>
+          </button>
+
+          <!-- Metin Olarak Kopyala Tuşu -->
+          <button id="copy-text-btn" class="tool-btn" title="Metin Olarak Kopyala">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          </button>
+
+          <!-- Turbo Hızlı Çevirme Toggle -->
+          <button id="turbo-btn" class="tool-btn" title="Hızlı Mod (Turbo)">
+            ⚡
+          </button>
+
+          <!-- Ses Aç/Kapat Butonu -->
+          <button id="mute-btn" class="tool-btn" title="Sesi Aç/Kapat">
+            🔊
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Fiziksel Metal Kol (Machined Aluminum Lever) -->
+      <div id="slot-lever" class="lever-area" title="Kolu çekmek için tıkla">
+        <div class="lever-arm-wrapper">
+          <div class="lever-knob"></div>
+          <div class="lever-stick"></div>
+        </div>
+        <div class="lever-mount"></div>
+      </div>
+
+    </div>
+
+    <!-- Sistem Geçmişi / Log -->
+    <section class="history-section">
+      <div class="history-title">
+        <span>LOG ARCHIVE // RECENT GENERATIONS</span>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="sounds.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
